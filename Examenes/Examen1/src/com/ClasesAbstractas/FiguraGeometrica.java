@@ -11,6 +11,8 @@ public abstract class FiguraGeometrica {
 	public abstract float getArea();
 	
 	@Override
-	public abstract String toString();
+	public String toString() {
+		return "Área: " + this.getClass().getSimpleName();
+	}
 	
 }

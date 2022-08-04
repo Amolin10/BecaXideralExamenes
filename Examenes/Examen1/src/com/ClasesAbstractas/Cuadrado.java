@@ -13,7 +13,7 @@ public class Cuadrado extends FiguraGeometrica {
 
 	@Override
 	public String toString() {
-		return "Área: " + this.getClass().getSimpleName() + ": L*L";
+		return super.toString() + ": L*L";
 	}
 
 }

@@ -13,7 +13,7 @@ public class Triangulo extends FiguraGeometrica {
 
 	@Override
 	public String toString() {
-		return "Área: " + this.getClass().getSimpleName() + ": (L*L)/2";
+		return super.toString() +  ": (L*L)/2";
 	}
 	
 	

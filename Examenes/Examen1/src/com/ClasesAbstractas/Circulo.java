@@ -13,6 +13,6 @@ public class Circulo extends FiguraGeometrica {
 
 	@Override
 	public String toString() {
-		return "Área: " + this.getClass().getSimpleName() + ": PI*(R*R)";
+		return super.toString() +  ": PI*(R*R)";
 	}
 }
