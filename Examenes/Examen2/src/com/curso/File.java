@@ -1,10 +1,10 @@
 package com.curso;
 
-public interface Contenedor {
+public interface File {
 	
 	String getContenido();
 	
-	void addContenedor(Contenedor cont);
+	void addContenedor(File cont);
 	
 	void indicarNivel(int nivel);
 	

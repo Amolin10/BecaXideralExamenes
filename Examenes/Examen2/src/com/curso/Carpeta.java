@@ -3,25 +3,26 @@ package com.curso;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Caja implements Contenedor {
+public class Carpeta implements File {
 	
-	private List<Contenedor> contenido = new ArrayList<>();
+	private List<File> contenido = new ArrayList<>();
 	private StringBuilder contentInfo = new StringBuilder();
 	private int nivel = 0;
+	private String nombreCarpeta;
 	
-	Caja () {
-		
+	Carpeta (String nombreCarpeta) {
+		this.nombreCarpeta = nombreCarpeta;
 	}
 
-	public void addContenedor(Contenedor cont) {
+	public void addContenedor(File cont) {
 		contenido.add(cont);
 	}
 	
 	@Override
 	public String getContenido() {
 		
-		contentInfo.append("Caja\n");
-		for(Contenedor cont: contenido) {
+		contentInfo.append(nombreCarpeta + "/\n");
+		for(File cont: contenido) {
 			cont.indicarNivel(nivel + 1);
 			contentInfo.append(cont.getContenido());
 		}
@@ -32,7 +33,7 @@ public class Caja implements Contenedor {
 	public void indicarNivel(int nivel) {
 		this.nivel = nivel;
 		for(int i = 0; i < nivel; ++i) {
-			contentInfo.append("*"); 
+			contentInfo.append("\t"); 
 		}
 	}
 		

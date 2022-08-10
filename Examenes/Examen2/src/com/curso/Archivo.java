@@ -1,11 +1,11 @@
 package com.curso;
 
-public class Producto implements Contenedor {
+public class Archivo implements File {
 
 	private String nombreProducto;
 	private int nivel;
 	
-	public Producto (String nombreProducto) {
+	public Archivo (String nombreProducto) {
 		this.nombreProducto = nombreProducto;
 	}
 
@@ -18,7 +18,7 @@ public class Producto implements Contenedor {
 	 * No utilizo este método
 	 */
 	@Override
-	public void addContenedor(Contenedor cont) {
+	public void addContenedor(File cont) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -27,7 +27,7 @@ public class Producto implements Contenedor {
 	public void indicarNivel(int nivel) {
 		this.nivel = nivel;
 		for(int i = 0; i < nivel; ++i) {
-			nombreProducto = "*" + nombreProducto; 
+			nombreProducto = "\t" + nombreProducto; 
 		}		
 	}
 
