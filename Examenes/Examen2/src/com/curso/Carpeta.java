@@ -10,7 +10,7 @@ public class Carpeta implements File {
 	private int nivel = 0;
 	private String nombreCarpeta;
 	
-	Carpeta (String nombreCarpeta) {
+	public Carpeta (String nombreCarpeta) {
 		this.nombreCarpeta = nombreCarpeta;
 	}
 

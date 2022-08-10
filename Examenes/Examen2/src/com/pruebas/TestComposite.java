@@ -1,33 +1,44 @@
-//package com.pruebas;
-//
-//import static org.junit.jupiter.api.Assertions.assertEquals;
-//
-//import org.junit.jupiter.api.Test;
-//import com.curso.*;
-//
-//class TestComposite {
-//
-//	@Test
-//	void testDouble() {
-//		double d1 = 5.0;
-//		assertEquals(5.0,d1);	
-//	}
-//	
-//	@Test
-//	void testDoubleSuma() {
-//		double d1 = 5.0;
-//		double d2 = 4.9;
-//		double r = d1+d2;
-//		assertEquals(9.9,r);	
-//	}
-//	
-//	@Test
-//	void testConstante1() {
-//		double testValor = 6.6;
-//		Expresion e = new Constante(testValor);
-//		assertEquals(testValor,e.getValor());
-//	}
-//	
+package com.pruebas;
+
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import com.curso.*;
+
+class TestComposite {
+
+	@DisplayName("Asignar nombre a un archivo")
+	@Test
+	void testArchivo() {
+		String nombreArchivo = "fichero.txt\n";
+		File archivo = new Archivo("fichero.txt");
+		assertTrue(nombreArchivo.equals(archivo.getContenido()));
+	}
+	
+	@DisplayName("Carpeta vacía")
+	@Test
+	void testCarpetaVacia() {
+		String contenido = "Videos/\n";
+		File carpeta = new Carpeta("Videos");
+		assertTrue(carpeta.getContenido().startsWith(contenido));
+	}
+		
+
+	@DisplayName("Carpeta + archivo")
+	@ParameterizedTest
+	@ValueSource(strings = {"Videos", "fichero.txt"})
+	void testCarpetaConArchivo(String contenido) {
+		File carpeta = new Carpeta("Videos");
+		File archivo = new Archivo("fichero.txt");
+		carpeta.addContenedor(archivo);
+		assertTrue(carpeta.getContenido().contains(contenido));
+	}
+	
 //	@Test
 //	void testConstante2() {
 //		Expresion e = new Constante(8.4);
@@ -99,5 +110,5 @@
 //						
 //		assertEquals(-0.0001162, e.getValor(), 0.000001);
 //	}
-//
-//}
+
+}
