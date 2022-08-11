@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -39,76 +40,79 @@ class TestComposite {
 		assertTrue(carpeta.getContenido().contains(contenido));
 	}
 	
-//	@Test
-//	void testConstante2() {
-//		Expresion e = new Constante(8.4);
-//		assertEquals(8.4,e.getValor());
-//	}
-//	
-//	@Test
-//	void testSuma() {
-//		double testValorA = 4.5;
-//		double testValorB = 8.9;
-//		Expresion left = new Constante(testValorA);
-//		Expresion right = new Constante(testValorB);
-//		Expresion e = new Suma(left,right);
-//		assertEquals(13.4,e.getValor());
-//	}
-//	
-//	@Test
-//	void testResta() {
-//		double testValorA = 4.5;
-//		double testValorB = 8.9;
-//		Expresion left = new Constante(testValorA);
-//		Expresion right = new Constante(testValorB);
-//		Expresion e = new Resta(left,right);
-//		assertEquals(-4.4,e.getValor());
-//	}
-//	
-//	@Test
-//	void testSuma1() {
-//		double testValorA = 4.5;
-//		double testValorB = 8.9;
-//		Expresion left = new Constante(testValorA);
-//		Expresion right = new Constante(testValorB);
-//		Expresion e1 = new Suma(right,left);
-//		Expresion e2 = new Resta(e1,right);
-//		assertEquals(4.5,e2.getValor());
-//	}
-//	
-//	@Test
-//	void testSuma2() {
-//		double testValorA = 4.5;
-//		double testValorB = 8.9;
-//		Expresion e = new Resta(
-//				new Suma(
-//						new Constante(testValorB),
-//						new Constante(testValorA)
-//						),
-//				new Constante(testValorB));
-//		assertEquals(4.5,e.getValor());
-//	}
-//	
-//	@Test
-//	public void testExpresionCompleja() {
-//		Expresion e = 
-//				new Division(
-//						new Multi(
-//								new Resta(
-//										new Constante(4.0),
-//										new Constante(6.0)
-//										),
-//								new Constante(200.0)
-//						),
-//						new Suma(
-//								new Constante(3),
-//								new Constante(83)
-//								)
-//								
-//						);
-//		
-//						
-//		assertEquals(-0.0001162, e.getValor(), 0.000001);
-//	}
-
+	@DisplayName("Carpeta + carpeta + archivo")
+	@ParameterizedTest
+	@ValueSource(strings = {"Documentos", "Videos", "fichero.txt"})
+	void testCarpetaConCarpeta(String contenido) {
+		File carpeta1 = new Carpeta("Documentos");
+		File carpeta2 = new Carpeta("Videos");
+		File archivo = new Archivo("fichero.txt");
+		carpeta1.addContenedor(carpeta2);
+		carpeta2.addContenedor(archivo);
+		assertTrue(carpeta1.getContenido().contains(contenido));
+	}
+	
+	@Nested
+	@DisplayName("Carpeta Compuesta")
+	class CarpetaCompuesta {
+		
+		@DisplayName("Carpeta Imágenes")
+		@ParameterizedTest
+		@ValueSource(strings = {"Imágenes", "Mi_foto.jpg", "screenshot.jpg"})
+		void testCarpetaImagenes(String contenidoImagenes) {
+			
+			File carpetaImagenes = new Carpeta("Imágenes");
+			File imagen1 = new Archivo("Mi_foto.jpg");
+			File imagen2 = new Archivo("screenshot.jpg");
+			carpetaImagenes.addContenedor(imagen1);
+			carpetaImagenes.addContenedor(imagen2);
+			
+			assertTrue(carpetaImagenes.getContenido().contains(contenidoImagenes));
+		}
+		
+		@DisplayName("Carpeta Programas")
+		@ParameterizedTest
+		@ValueSource(strings = {"Programas", "sort.py", "cliente.py"})
+		void testCarpetaProgramas(String contenidoProgramas) {
+			
+			File carpetaProgramas = new Carpeta("Programas");
+			File programa1 = new Archivo("sort.py");
+			File programa2 = new Archivo("cliente.py");
+			carpetaProgramas.addContenedor(programa1);
+			carpetaProgramas.addContenedor(programa2);
+			
+			assertTrue(carpetaProgramas.getContenido().contains(contenidoProgramas));
+		}
+		
+		
+		@DisplayName("Carpeta Compuesta")
+		@ParameterizedTest
+		@ValueSource(strings = {"Documentos", "Título.docx", "CV.pdf", "Imágenes", "Mi_foto.jpg", "screenshot.jpg", "Programas", "sort.py", "cliente.py"})
+		void testCarpetaCompuesta(String contenido) {
+			File carpetaDocumentos = new Carpeta("Documentos");
+			File archivo1 = new Archivo("Título.docx");
+			File archivo2 = new Archivo("CV.pdf");
+			carpetaDocumentos.addContenedor(archivo1);
+			carpetaDocumentos.addContenedor(archivo2);
+			
+			File carpetaImagenes = new Carpeta("Imágenes");
+			carpetaDocumentos.addContenedor(carpetaImagenes);
+			File imagen1 = new Archivo("Mi_foto.jpg");
+			File imagen2 = new Archivo("screenshot.jpg");
+			carpetaImagenes.addContenedor(imagen1);
+			carpetaImagenes.addContenedor(imagen2);
+						
+			File carpetaProgramas = new Carpeta("Programas");
+			carpetaDocumentos.addContenedor(carpetaProgramas);
+			File programa1 = new Archivo("sort.py");
+			File programa2 = new Archivo("cliente.py");
+			carpetaProgramas.addContenedor(programa1);
+			carpetaProgramas.addContenedor(programa2);
+			
+			assertTrue(carpetaDocumentos.getContenido().contains(contenido));
+		}
+		
+	
+	}	
+			
 }
