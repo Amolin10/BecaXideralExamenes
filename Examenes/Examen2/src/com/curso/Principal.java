@@ -26,7 +26,6 @@ public class Principal {
 		
 		System.out.println(carpetaDocumentos.getContenido());
 		
-		
 	}
 
 }

@@ -109,6 +109,7 @@ class TestComposite {
 			carpetaProgramas.addContenedor(programa1);
 			carpetaProgramas.addContenedor(programa2);
 			
+			//System.out.println(carpetaDocumentos.getContenido());
 			assertTrue(carpetaDocumentos.getContenido().contains(contenido));
 		}
 		
