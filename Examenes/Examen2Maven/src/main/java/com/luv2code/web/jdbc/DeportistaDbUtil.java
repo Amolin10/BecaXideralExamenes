@@ -9,14 +9,35 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+/**
+ * Utilidades para inyectar y extraer de la base de datos
+ * @author AMolin
+ */
 public class DeportistaDbUtil {
 
+	/**
+	 * Tiene un recurso definido en Deployed Resources/webapp/META-INF/context.xml
+	 */
 	private DataSource dataSource;
 
+	/**
+	 * Constructor 
+	 * @param theDataSource lo asigna a su variable de instancia
+	 */
 	public DeportistaDbUtil(DataSource theDataSource) {
 		dataSource = theDataSource;
 	}
 	
+	/**
+	 * Hace un query para obtener todos los elementos de la tabla deportista
+	 * En un ResultSet obtiene el resultado
+	 * Obtiene el valor de cada campo
+	 * crea un Deportista temporal utilizando los valores obtenidos
+	 * Agrega el deporttista a la lista
+	 * Repite hasta que no hay más deportistas en el ResultSet
+	 * @return una lista de deportistas
+	 * @throws Exception si no se pude conectar a la base de datos, o no puede ejecutar la sentencia sql
+	 */
 	public List<Deportista> getDeportistas() throws Exception {
 		
 		List<Deportista> deportistas = new ArrayList<>();
@@ -45,6 +66,11 @@ public class DeportistaDbUtil {
 		}	
 	}
 
+	/**
+	 * Inserta un deportista a la base de datos
+	 * @param theDeportista es el deportista que agrega a la base de datos
+	 * @throws Exception si no se pude conectar a la base de datos, o no puede ejecutar la sentencia sql
+	 */
 	public void addDeportista(Deportista theDeportista) throws Exception {
 
 		Connection myConn = null;
@@ -76,6 +102,12 @@ public class DeportistaDbUtil {
 		
 	}
 	
+	/**
+	 * Cierra conexiones dentro de un bloque try
+	 * @param myConn recurso a cerrar
+	 * @param myStmt recurso a cerrar
+	 * @param myRs recurso a cerrar
+	 */
 	private void close(Connection myConn, Statement myStmt, ResultSet myRs) {
 
 		try {
@@ -96,6 +128,12 @@ public class DeportistaDbUtil {
 		}
 	}
 	
+	/**
+	 * Elimina un deportista de la base de datos utilizando el id del deportista
+	 * Hace un query para eliminar un deportista con id indicado
+	 * @param theDeportistaId el id del deportista que se elimina de la base de datos
+	 * @throws Exception si no se pude conectar a la base de datos, o no puede ejecutar la sentencia sql
+	 */
 	public void deleteDeportista(String theDeportistaId) throws Exception {
 
 		Connection myConn = null;
@@ -126,6 +164,11 @@ public class DeportistaDbUtil {
 		}	
 	}
 
+	/**
+	 * Actualiza un deportista tomando sus nuevos valores
+	 * @param theDeportista es un Deportista con los nuevos valores a insertar
+	 * @throws Exception si no se pude conectar a la base de datos, o no puede ejecutar la sentencia sql
+	 */
 	public void updateDeportista(Deportista theDeportista) throws Exception {
 		
 		Connection myConn = null;
@@ -158,6 +201,12 @@ public class DeportistaDbUtil {
 		}
 	}
 
+	/**
+	 * Obtiene un deportista basado en la id.
+	 * @param theDeportistaId es el id del deportista que se quiere obtener
+	 * @return un deportista que tenga la id indicada
+	 * @throws Exception si no se pude conectar a la base de datos, o no puede ejecutar la sentencia sql
+	 */
 	public Deportista getDeportista(String theDeportistaId) throws Exception {
 
 		Deportista theDeportista = null;

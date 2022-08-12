@@ -16,17 +16,32 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 /**
- * Servlet implementation class DeportistaControllerServlet
+ * Implementación de Servlet
+ * @author AMolin
+ */
+/**
+ * Nombre del servlet
+ * @author Amolin
  */
 @WebServlet("/DeportistaControllerServlet")
 public class DeportistaControllerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * Tiene una utilería para manejar la base de datos de deportista
+	 */
 	private DeportistaDbUtil deportistaDbtil;
 	
+	/**
+	 * Inyección del recurso desde Deployed/webapp/META-INF/context.xml
+	 * TomCat toma este archivo
+	 */
 	@Resource(name="jdbc/web_student_tracker")
 	private DataSource dataSource;
 	
+	/**
+	 * Inicializa la utilería
+	 */
 	@Override
 	public void init() throws ServletException {
 		super.init();
@@ -40,6 +55,12 @@ public class DeportistaControllerServlet extends HttpServlet {
 		}
 	}
 	
+	/**
+	 * Método doGet para escuchar las peticiones que utilizan el método GET
+	 * Lee el comando y en base a él ejecuta la funcinalidad
+	 * @param request es dada por la petición
+	 * @param response es dado por la petición
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		try {
@@ -85,6 +106,12 @@ public class DeportistaControllerServlet extends HttpServlet {
 		
 	}
 
+	/**
+	 * Utiliza la utilidad para eliminar un deportista de la base de datos
+	 * @param request es dada por la petición
+	 * @param response es dada por la petición
+	 * @throws Exception si no se pude conectar a la base de datos, o no puede ejecutar la sentencia sql
+	 */
 	private void deleteDeportista(HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
@@ -98,6 +125,12 @@ public class DeportistaControllerServlet extends HttpServlet {
 		listaDeportistas(request, response);
 	}
 	
+	/**
+	 * Obtiene un deportista con ayuda de la utilidad y lo coloca en una nuevo jsp para modificar sus valores
+	 * @param request es dada por la petición
+	 * @param response es dada por la petición
+	 * @throws Exception si no se pude conectar a la base de datos, o no puede ejecutar la sentencia sql
+	 */
 	private void loadDeportista(HttpServletRequest request, HttpServletResponse response) 
 		throws Exception {
 
@@ -116,6 +149,12 @@ public class DeportistaControllerServlet extends HttpServlet {
 		dispatcher.forward(request, response);			
 	}
 	
+	/**
+	 * Utiliza la utilidad para actualizar los campos de un deportista de la base de datos
+	 * @param request es dada por la petición
+	 * @param response es dada por la petición
+	 * @throws Exception si no se pude conectar a la base de datos, o no puede ejecutar la sentencia sql
+	 */
 	private void updateDeportista(HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
@@ -137,6 +176,12 @@ public class DeportistaControllerServlet extends HttpServlet {
 		
 	}
 	
+	/**
+	 * Utiliza la utilidad para insertar un deportista en base de datos
+	 * @param request es dada por la petición
+	 * @param response es dada por la petición
+	 * @throws Exception si no se pude conectar a la base de datos, o no puede ejecutar la sentencia sql
+	 */
 	private void addDeportista(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		// read deportista info from form data
@@ -154,6 +199,14 @@ public class DeportistaControllerServlet extends HttpServlet {
 		listaDeportistas(request, response);
 	}
 	
+	/**
+	 * Utiliza la utilidad para obtener una lista de deportistas y mostrarla en ese jsp
+	 * indica el atributo "LISTA_DEPORTISTAS" para que el jsp pueda extraer los datos de la
+	 * lista y colocarlos del lado del browser
+	 * @param request es dada por la petición
+	 * @param response es dada por la petición
+	 * @throws Exception si no se pude conectar a la base de datos, o no puede ejecutar la sentencia sql
+	 */
 	private void listaDeportistas(HttpServletRequest request, HttpServletResponse response) 
 			throws Exception {
 
@@ -173,16 +226,3 @@ public class DeportistaControllerServlet extends HttpServlet {
 		}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
