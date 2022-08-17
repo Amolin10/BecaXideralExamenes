@@ -37,7 +37,8 @@
          UserDatabaseRealm to authenticate users
     -->
     <Resource auth="Container" description="User database that can be updated and saved" factory="org.apache.catalina.users.MemoryUserDatabaseFactory" name="UserDatabase" pathname="conf/tomcat-users.xml" type="org.apache.catalina.UserDatabase"/>
-  </GlobalNamingResources>
+    <Resource auth="Container" driverClassName="com.mysql.cj.jdbc.Driver" global="jdbc/javatechie" maxActive="100" maxIdle="20" maxWait="10000" minIdle="5" name="jdbc/javatechie" password="webstudent" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/web_student_tracker?useSSL=false&amp;serverTimezone=UTC" username="webstudent"/>
+    </GlobalNamingResources>
 
   <!-- A "Service" is a collection of one or more "Connectors" that share
        a single "Container" Note:  A "Service" is not itself a "Container",
@@ -71,7 +72,8 @@
     <!-- Define an SSL/TLS HTTP/1.1 Connector on port 8443
          This connector uses the NIO implementation. The default
          SSLImplementation will depend on the presence of the APR/native
-         library and the useOpenSSL attribute of the AprLifecycleListener.
+         library and the useOpenSSL attribute of the
+         AprLifecycleListener.
          Either JSSE or OpenSSL style configuration may be used regardless of
          the SSLImplementation selected. JSSE style configuration is used below.
     -->
@@ -152,7 +154,7 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
-      <Context docBase="Examen2Maven" path="/deportista-web-tracker" reloadable="true" source="org.eclipse.jst.jee.server:Examen2Maven"/></Host>
+      <Context docBase="deportista-web-tracker" path="/maven-student-web-tracker" reloadable="true" source="org.eclipse.jst.jee.server:deportista-web-tracker"/></Host>
     </Engine>
   </Service>
 </Server>

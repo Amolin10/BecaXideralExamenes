@@ -26,4 +26,8 @@
     <!--
     <Manager pathname="" />
     -->
+    <ResourceLink name="jdbc/javatechie"
+                  global="jdbc/javatechie"
+                  auth="Container"
+                  type="javax.sql.DataSource" />
 </Context>
