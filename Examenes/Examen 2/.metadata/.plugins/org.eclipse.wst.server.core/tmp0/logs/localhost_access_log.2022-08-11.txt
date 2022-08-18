@@ -1,0 +1,8 @@
+127.0.0.1 - - [11/Aug/2022:19:20:55 -0500] "GET / HTTP/1.1" 404 687
+0:0:0:0:0:0:0:1 - - [11/Aug/2022:19:21:01 -0500] "GET /maven-student-web-tracker/DeportistaControllerServlet HTTP/1.1" 200 4555
+0:0:0:0:0:0:0:1 - - [11/Aug/2022:19:21:06 -0500] "GET /maven-student-web-tracker/DeportistaControllerServlet;jsessionid=323A7F51E59D11086A114CBA5EFC7A30?command=DELETE&deportistaId=7 HTTP/1.1" 200 3476
+0:0:0:0:0:0:0:1 - - [11/Aug/2022:19:21:09 -0500] "GET /maven-student-web-tracker/add-deportista-form.jsp HTTP/1.1" 200 1171
+0:0:0:0:0:0:0:1 - - [11/Aug/2022:19:21:09 -0500] "GET /maven-student-web-tracker/css/add-deportista-style.css HTTP/1.1" 200 566
+0:0:0:0:0:0:0:1 - - [11/Aug/2022:19:21:23 -0500] "GET /maven-student-web-tracker/DeportistaControllerServlet?command=ADD&nombre=Lio&apellido=Messi&deporte=FootBaall HTTP/1.1" 200 4030
+0:0:0:0:0:0:0:1 - - [11/Aug/2022:19:21:29 -0500] "GET /maven-student-web-tracker/DeportistaControllerServlet?command=LOAD&deportistaId=2 HTTP/1.1" 200 1326
+0:0:0:0:0:0:0:1 - - [11/Aug/2022:19:21:33 -0500] "GET /maven-student-web-tracker/DeportistaControllerServlet?command=UPDATE&deportistaId=2&nombre=Cristiano&apellido=Ronaldo&deporte=Football HTTP/1.1" 200 4030

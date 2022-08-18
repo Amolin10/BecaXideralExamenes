@@ -1,0 +1,5 @@
+127.0.0.1 - - [16/Aug/2022:12:12:48 -0500] "GET / HTTP/1.1" 404 687
+0:0:0:0:0:0:0:1 - - [16/Aug/2022:12:12:54 -0500] "GET /maven-student-web-tracker/DeportistaControllerServlet HTTP/1.1" 200 5201
+0:0:0:0:0:0:0:1 - - [16/Aug/2022:12:13:08 -0500] "GET /maven-student-web-tracker/add-deportista-form.jsp HTTP/1.1" 200 1171
+0:0:0:0:0:0:0:1 - - [16/Aug/2022:12:13:13 -0500] "GET /maven-student-web-tracker/DeportistaControllerServlet?command=ADD&nombre=Armando&apellido=Molina&deporte=Box HTTP/1.1" 200 5138
+0:0:0:0:0:0:0:1 - - [16/Aug/2022:12:13:20 -0500] "GET /maven-student-web-tracker/DeportistaControllerServlet?command=DELETE&deportistaId=25 HTTP/1.1" 200 4585
