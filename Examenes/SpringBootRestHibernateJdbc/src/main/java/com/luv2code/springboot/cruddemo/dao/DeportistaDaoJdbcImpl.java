@@ -40,6 +40,7 @@ public class DeportistaDaoJdbcImpl implements DeportistaDAO {
 	public List<Deportista> findAll() {
 		List<Deportista> deportistas = new ArrayList<>();
 		
+		//Try with resources
 		try (	Connection myConn = dataSource.getConnection();
 				Statement myStmt = myConn.createStatement();
 				ResultSet myRs = myStmt.executeQuery("select * from deportista");
@@ -47,25 +48,25 @@ public class DeportistaDaoJdbcImpl implements DeportistaDAO {
 			// process result set
 			while (myRs.next()) {
 				
-				// retrieve data from result set row
+				//Obtener datos del deportista
 				int id = myRs.getInt("id");
 				String nombre = myRs.getString("nombre");
 				String apellido = myRs.getString("apellido");
 				String deporte = myRs.getString("deporte");
 				
-				// create new deportista object
+				//Crear un nuevo deportista 
 				Deportista tempDeportista = new Deportista(id, nombre, apellido, deporte);
 				
-				// add it to the list of deportista
+				//Agregarlo a la lista
 				deportistas.add(tempDeportista);				
-			}
-			
+			} //while
 			return deportistas;		
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		} //try
 		return deportistas;		
-	}
+	} //method
 	
 	/**
 	 * Obtiene un deportista basado en la id.
@@ -74,54 +75,43 @@ public class DeportistaDaoJdbcImpl implements DeportistaDAO {
 	 */
 	@Override
 	public Deportista findById(int theId) {
-		Deportista theDeportista = null;
-		
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-		ResultSet myRs = null;
+		Deportista theDeportista = null;	
 		int deportistaId;
 		
-		try {
-			// convert student id to int
+		//try with resources
+		try(	Connection myConn = dataSource.getConnection();
+				PreparedStatement myStmt = myConn.prepareStatement("select * from deportista where id=?");
+			) {
+			
+			//id del deportista
 			deportistaId = theId;
-			
-			// get connection to database
-			myConn = dataSource.getConnection();
-			
-			// create sql to get selected student
-			String sql = "select * from deportista where id=?";
-			
-			// create prepared statement
-			myStmt = myConn.prepareStatement(sql);
-			
-			// set params
+			//Asignar a la sentencia SQL
 			myStmt.setInt(1, deportistaId);
 			
-			// execute statement
-			myRs = myStmt.executeQuery();
-			
-			// retrieve data from result set row
-			if (myRs.next()) {
-				String nombre = myRs.getString("nombre");
-				String apellido = myRs.getString("apellido");
-				String deporte = myRs.getString("deporte");
+			//try with resources anidado
+			try (ResultSet myRs = myStmt.executeQuery()) {
+				//Obtener datos del deportista
+				if (myRs.next()) {
+					String nombre = myRs.getString("nombre");
+					String apellido = myRs.getString("apellido");
+					String deporte = myRs.getString("deporte");
+					
+					//Crear un deportista asignando el id recibido
+					theDeportista = new Deportista(deportistaId, nombre, apellido, deporte);
+				}
+				else {
+					throw new SQLException("Could not find deportista id: " + deportistaId);
+				}				
 				
-				// use the studentId during construction
-				theDeportista = new Deportista(deportistaId, nombre, apellido, deporte);
-			}
-			else {
-				throw new Exception("Could not find deportista id: " + deportistaId);
-			}				
-			
-			return theDeportista;
-		} catch (Exception e) {
+				//Regresar el deportista encontrado
+				return theDeportista;
+				
+			} //try	anidado		
+		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			// clean up JDBC objects
-			close(myConn, myStmt, myRs);
-		}
+		} //try
 		return null;
-	}
+	} //method
 	
 	
 	/**
@@ -131,55 +121,51 @@ public class DeportistaDaoJdbcImpl implements DeportistaDAO {
 	 */
 	@Override
 	public void save(Deportista theDeportista) {
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
 		
-		try {
-			// get db connection
-			myConn = dataSource.getConnection();
-			
-			int idDeportista = theDeportista.getId();
-			if (idDeportista == 0) {
-				// create sql for insert
-				String sql = "insert into deportista "
-						   + "(nombre, apellido, deporte) "
-						   + "values (?, ?, ?)";
-				
-				myStmt = myConn.prepareStatement(sql);
-				
-				// set the param values for the deportista
+		int idDeportista = theDeportista.getId();
+		//Insert
+		if (idDeportista == 0) {
+			try (	Connection myConn = dataSource.getConnection();
+					PreparedStatement myStmt = myConn.prepareStatement(
+								 "insert into deportista "
+							   + "(nombre, apellido, deporte) "
+							   + "values (?, ?, ?)");) 
+			{
+				//Dar valores a la sentencia insert SQL
 				myStmt.setString(1, theDeportista.getNombre());
 				myStmt.setString(2, theDeportista.getApellido());
 				myStmt.setString(3, theDeportista.getDeporte());
 				
-				// execute sql insert
+				//Ejecutar sentencia insert
 				myStmt.execute();
-			} else {
-				// create SQL update statement
-				String sql = "update deportista "
-							+ "set nombre=?, apellido=?, deporte=? "
-							+ "where id=?";
-				
-				// prepare statement
-				myStmt = myConn.prepareStatement(sql);
-				
-				// set params
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
+		//Update
+		} else {
+			try (	Connection myConn = dataSource.getConnection();
+					PreparedStatement myStmt = myConn.prepareStatement(
+									  "update deportista "
+									+ "set nombre=?, apellido=?, deporte=? "
+									+ "where id=?");) 
+			{
+				//Dar valores a la sentencia update SQL
 				myStmt.setString(1, theDeportista.getNombre());
 				myStmt.setString(2, theDeportista.getApellido());
 				myStmt.setString(3, theDeportista.getDeporte());
 				myStmt.setInt(4, theDeportista.getId());
 				
-				// execute SQL statement
+				//Ejecutar sentencia update
 				myStmt.execute();
-			}			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			// clean up JDBC objects
-			close(myConn, myStmt, null);
-		}
-	}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} //try
+		} //else
+	} //method
+	
 	
 	/**
 	 * Elimina un deportista de la base de datos utilizando el id del deportista
@@ -188,63 +174,21 @@ public class DeportistaDaoJdbcImpl implements DeportistaDAO {
 	 */
 	@Override
 	public void deleteById(int theId) {
-		Connection myConn = null;
-		PreparedStatement myStmt = null;
-		
-		try {
-			// convert student id to int
+				
+		try (	Connection myConn = dataSource.getConnection();
+				PreparedStatement myStmt = myConn.prepareStatement("delete from deportista where id=?");)
+		{
+			//id del deportista
 			int deportistaId = theId;
-			
-			// get connection to database
-			myConn = dataSource.getConnection();
-			
-			// create sql to delete student
-			String sql = "delete from deportista where id=?";
-			
-			// prepare statement
-			myStmt = myConn.prepareStatement(sql);
-			
-			// set params
+			//Dar valores a la sentencia delete SQL
 			myStmt.setInt(1, deportistaId);
-			
-			// execute sql statement
+			//Ejecutar sentencia delete
 			myStmt.execute();
+			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} finally {
-			// clean up JDBC code
-			close(myConn, myStmt, null);
-		}	
-		
-	}
+		} //try
+	} //method
 	
-	/**
-	 * Cierra conexiones dentro de un bloque try
-	 * @param myConn recurso a cerrar
-	 * @param myStmt recurso a cerrar
-	 * @param myRs recurso a cerrar
-	 */
-	private void close(Connection myConn, Statement myStmt, ResultSet myRs) {
-
-		try {
-			if (myRs != null) {
-				myRs.close();
-			}
-			
-			if (myStmt != null) {
-				myStmt.close();
-			}
-			
-			if (myConn != null) {
-				myConn.close();   // doesn't really close it ... just puts back in connection pool
-			}
-		}
-		catch (Exception exc) {
-			exc.printStackTrace();
-		}
-	}
-
-	
-}
+} //class
 

@@ -71,8 +71,7 @@ public class DeportistaRestController {
 	@PostMapping("/deportistas")
 	public Deportista addDeportista(@RequestBody Deportista theDeportista) {
 		
-		// also just in case they pass an id in JSON ... set id to 0
-		// this is to force a save of new item ... instead of update
+		//Colocar id = 0 para que hibernate haga un alta y no una actualización
 		
 		theDeportista.setId(0);
 		
@@ -116,13 +115,3 @@ public class DeportistaRestController {
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-

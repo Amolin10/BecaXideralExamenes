@@ -22,10 +22,10 @@ public class DeportistaDAOHibernateImpl implements DeportistaDAO {
 	/**
 	 * El EntityManager pertenece a Hibernate, es inyectado por SpringBoot en el constructor
 	 */
-	// define field for entitymanager	
+	//Hibernate ORM
 	private EntityManager entityManager;
 		
-	// set up constructor injection
+	//recurso inyectado por Spring
 	@Autowired
 	public DeportistaDAOHibernateImpl(EntityManager theEntityManager) {
 		entityManager = theEntityManager;
@@ -37,17 +37,17 @@ public class DeportistaDAOHibernateImpl implements DeportistaDAO {
 	@Override
 	public List<Deportista> findAll() {
 
-		// get the current hibernate session
+		//Iniciar la sesión de Hibernate
 		Session currentSession = entityManager.unwrap(Session.class);
 		
-		// create a query
+		//Sentencia SQL con Hibernate
 		Query<Deportista> theQuery =
 				currentSession.createQuery("from Deportista", Deportista.class);
 		
-		// execute query and get result list
+		// Ejecutar sentencia
 		List<Deportista> deportistas = theQuery.getResultList();
 		
-		// return the results		
+		// regresar la lista de deportistas	
 		return deportistas;
 	}
 
@@ -59,14 +59,14 @@ public class DeportistaDAOHibernateImpl implements DeportistaDAO {
 	@Override
 	public Deportista findById(int theId) {
 
-		// get the current hibernate session
+		//Iniciar la sesión de Hibernate
 		Session currentSession = entityManager.unwrap(Session.class);
 		
-		// get the employee
+		//Obteber el deportista con id = theId
 		Deportista theDeportista =
 				currentSession.get(Deportista.class, theId);
 		
-		// return the employee
+		//regresar el empleado
 		return theDeportista;
 	}
 
@@ -78,10 +78,10 @@ public class DeportistaDAOHibernateImpl implements DeportistaDAO {
 	@Override
 	public void save(Deportista theDeportista) {
 
-		// get the current hibernate session
+		//Iniciar la sesión de Hibernate
 		Session currentSession = entityManager.unwrap(Session.class);
 		
-		// save employee
+		//Guardar el deportista
 		currentSession.saveOrUpdate(theDeportista);
 	}
 
@@ -92,10 +92,10 @@ public class DeportistaDAOHibernateImpl implements DeportistaDAO {
 	@Override
 	public void deleteById(int theId) {
 		
-		// get the current hibernate session
+		//Iniciar la sesión de Hibernate
 		Session currentSession = entityManager.unwrap(Session.class);
 				
-		// delete object with primary key
+		//Eliminar el deportista con id = theId
 		Query theQuery = 
 				currentSession.createQuery(
 						"delete from Deportista where id=:deportistaId");
