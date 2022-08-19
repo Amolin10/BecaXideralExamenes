@@ -28,7 +28,7 @@ public class DeportistaServiceImpl implements DeportistaService {
 	 * JDBC: 		"deportistaDaoJdbcImpl"
 	 */
 	@Autowired
-	public DeportistaServiceImpl(@Qualifier("deportistaDAOHibernateImpl") DeportistaDAO theDeportistaDAO) {
+	public DeportistaServiceImpl(@Qualifier("deportistaDaoJdbcImpl") DeportistaDAO theDeportistaDAO) {
 		deportistaDAO = theDeportistaDAO;
 	}
 	

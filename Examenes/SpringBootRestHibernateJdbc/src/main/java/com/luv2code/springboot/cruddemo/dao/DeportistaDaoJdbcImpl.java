@@ -23,16 +23,13 @@ public class DeportistaDaoJdbcImpl implements DeportistaDAO {
 	@Autowired
 	DataSource dataSource;
 
-	Connection myConn = null;
-	Statement myStmt = null;
-	ResultSet myRs = null;
 	
 	/**
 	 * Hace un query para obtener todos los elementos de la tabla deportista
 	 * En un ResultSet obtiene el resultado
 	 * Obtiene el valor de cada campo
 	 * crea un Deportista temporal utilizando los valores obtenidos
-	 * Agrega el deporttista a la lista
+	 * Agrega el deportista a la lista
 	 * Repite hasta que no hay más deportistas en el ResultSet
 	 * @return una lista de deportistas
 	 */
@@ -60,7 +57,6 @@ public class DeportistaDaoJdbcImpl implements DeportistaDAO {
 				//Agregarlo a la lista
 				deportistas.add(tempDeportista);				
 			} //while
-			return deportistas;		
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -104,13 +100,12 @@ public class DeportistaDaoJdbcImpl implements DeportistaDAO {
 				}				
 				
 				//Regresar el deportista encontrado
-				return theDeportista;
-				
+								
 			} //try	anidado		
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} //try
-		return null;
+		return theDeportista;
 	} //method
 	
 	
